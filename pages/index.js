@@ -28,7 +28,7 @@ export default function Home({ exploreData, cardsData }) {
   return (
     <div className=" bg-gray-50">
       {loading ? (
-        <div className="w-screen h-screen bg-gray-50 flex justify-center place-items-center flex-col">
+        <div className="w-screen g h-screen bg-gray-50 flex justify-center place-items-center flex-col">
           <div className="relative -mb-10 flex flex-col justify-center place-items-center w-[250px] h-[250px]">
             <Image
               src="https://links.papareact.com/qd3"
