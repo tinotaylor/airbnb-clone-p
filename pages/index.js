@@ -23,7 +23,7 @@ export default function Home({ exploreData, cardsData }) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    },0);
   }, []);
   return (
     <div className=" bg-gray-50">
