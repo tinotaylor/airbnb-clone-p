@@ -6,10 +6,12 @@ import InfoCard from "../components/InfoCard";
 import { useEffect, useState } from "react";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 import Image from "next/image";
+import { SearchIcon } from "@heroicons/react/solid";
+import Map from "../components/Map";
 
 function Search({ searchResults }) {
   const [offsetY, setOffsetY] = useState(0);
-
+  const [filterResults, setFilterResults] = useState("");
   const router = useRouter();
   const { location, startDate, endDate, noOfGuests } = router.query;
   const formattedStartDate = format(new Date(startDate), "dd MMMM yy");
@@ -20,6 +22,52 @@ function Search({ searchResults }) {
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
+
+  useEffect(() => {
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      const header = document.querySelector("#header");
+      const logo = document.querySelector("#logo");
+      const search = document.querySelector("#search");
+      const searchInputEl = document.querySelector("#searchInput");
+      const hostIcons = document.querySelector("#hostIcons");
+
+      if (
+        (header && document.body.scrollTop > 80) ||
+        document.documentElement.scrollTop > 10
+      ) {
+        header.classList.remove("p-8");
+        header.classList.add("p-5");
+        logo.classList.remove("h-10");
+        logo.classList.add("h-8");
+        search.classList.remove("py-2");
+        searchInputEl.classList.add("placeholder-gray-400");
+        searchInputEl.classList.remove("placeholder-gray-50");
+        hostIcons.classList.add("text-gray-500");
+        hostIcons.classList.remove("text-gray-50");
+        header.classList.remove("bg-transparent");
+        header.classList.add("bg-white");
+        header.classList.add("shadow-md");
+      } else {
+        header.classList.remove("p-5");
+        header.classList.add("p-8");
+        header.classList.add("bg-transparent");
+        header.classList.remove("bg-white");
+        header.classList.remove("shadow-md");
+        logo.classList.add("h-10");
+        logo.classList.remove("h-8");
+        search.classList.add("py-2");
+        hostIcons.classList.remove("text-gray-500");
+        hostIcons.classList.add("text-gray-50");
+        searchInputEl.classList.remove("placeholder-gray-400");
+        searchInputEl.classList.add("placeholder-gray-50");
+      }
+    }
+  }, []);
+
 
 
   return (
@@ -35,23 +83,25 @@ function Search({ searchResults }) {
           objectFit="cover"
           objectPosition="center"
         />
+        {/* <div className="w-full absolute bottom-0 p-10 bg-gradient-to-t from-gray-50 "></div> */}
       </div>
-      <main className="flex py-14 bg-gray-50">
+      <main className=" py-14 flex bg-gray-50 relative">
         <section className="flex-grow  px-6 md:px-16">
-          <p className="text-xs mb-7">
-            <span className="bg-white shadow-sm p-3 rounded-md ">
-              {" "}
-              300+ stays -{" "}
-              <span className="bg-red-400 text-white p-1 rounded-md mr-1">
-                {formattedStartDate}{" "}
-              </span>{" "}
-              -{" "}
-              <span className="bg-red-400 text-white ml-1 p-1 rounded-md">
-                {formattedEndDate}
-              </span>{" "}
-              for {noOfGuests} guests
-            </span>
-          </p>
+          <div className="w-full flex place-items-center justify-between">
+            <p className="text-xs mb-7">
+              <span className="bg-white shadow-sm p-3 rounded-md ">
+                300+ stays -
+                <span className="bg-red-400 text-white p-1 rounded-md mx-1">
+                  {formattedStartDate}
+                </span>
+                -
+                <span className="bg-red-400 text-white mx-1 p-1 rounded-md">
+                  {formattedEndDate}
+                </span>
+                for {noOfGuests} guests
+              </span>
+            </p>
+          </div>
           <h1 className="text-3xl font-semibold mt-2 mb-6">
             Stays in {location}
           </h1>
@@ -63,22 +113,60 @@ function Search({ searchResults }) {
             <p className="button bg-white">Rooms and Beds</p>
             <p className="button bg-white">More filters</p>
           </div>
-          <div className="flex flex-col">
-            {searchResults.map(
-              ({ img, location, title, description, star, price, total }) => (
-                <InfoCard
-                  key={location}
-                  img={img}
-                  location={location}
-                  title={title}
-                  description={description}
-                  star={star}
-                  price={price}
-                  total={total}
-                />
-              )
-            )}
+          <div className=" flex w-auto bg-white p-5 rounded-md shadow-sm">
+            <div className="flex items-center h-20 w-full px-2 rounded-md py-2 shadow-md ">
+              Filter By Price:
+              <input
+                className=" flex-grow outline-none ml-2"
+                type="text"
+                value={filterResults}
+                onChange={(e) => setFilterResults(e.target.value)}
+              />
+              <SearchIcon className="h-10 mr-5 cursor-pointer" />
+            </div>
           </div>
+          <div className="flex flex-col">
+            {searchResults
+              .filter((item) => {
+                if (filterResults === "") {
+                  return item;
+                } else if (
+                  item.price.toLowerCase().includes(filterResults.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .filter((item) => {
+                if (location == "") {
+                  return item;
+                } else if (
+                  item.location.toLowerCase().includes(location.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map(
+                ({ img, location, title, description, star, price, total }) => (
+                  <InfoCard
+                    key={location}
+                    img={img}
+                    location={location}
+                    title={title}
+                    description={description}
+                    star={star}
+                    price={price}
+                    total={total}
+                  />
+                )
+              )}
+          </div>
+        </section>
+
+        <section className="relative hidden xl:inline-flex xl:min-w-[600px] rounded-2xl">
+          <Map searchResults={searchResults} filterResults={filterResults} />
+          <div className=" h-full absolute left-0 transform pointer-events-none rotate-180 p-16 bg-gradient-to-l from-gray-50 "></div>
+          <div className=" w-full absolute top-0 transform pointer-events-none  p-16 bg-gradient-to-b from-gray-50 "></div>
+          <div className=" w-full absolute bottom-0 z-50 pointer-events-none transform  p-16 bg-gradient-to-t from-gray-50 "></div>
         </section>
       </main>
       <Footer />
@@ -89,7 +177,7 @@ function Search({ searchResults }) {
 export default Search;
 
 export async function getServerSideProps() {
-  const searchResults = await fetch("https://links.papareact.com/isz").then(
+  const searchResults = await fetch("https://jsonkeeper.com/b/MOTC").then(
     (res) => res.json()
   );
 
@@ -99,3 +187,8 @@ export async function getServerSideProps() {
     },
   };
 }
+
+// https://jsonkeeper.com/b/MOTC
+
+
+// https://links.papareact.com/isz

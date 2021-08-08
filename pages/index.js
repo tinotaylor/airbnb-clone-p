@@ -23,7 +23,8 @@ export default function Home({ exploreData, cardsData }) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    },3400);
+    },0);
+    // 3400
   }, []);
   return (
     <div className=" bg-gray-50">
@@ -47,7 +48,7 @@ export default function Home({ exploreData, cardsData }) {
 
           <Header />
           <Banner />
-          <main className="relative max-w-7xl md:mx-auto px-8 sm:px-16 bg-white m-7 md:m-10 rounded-md shadow-md">
+          <main className="relative max-w-7xl md:mx-auto px-8 sm:px-16 bg-white m-7 md:m-10 rounded-xl shadow-md">
             <section className="pt-6">
               <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
               <Fade>

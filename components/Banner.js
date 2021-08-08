@@ -79,13 +79,13 @@ function Banner(props) {
                 dragElastic={0.10}
                 dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
                 whileTap={{ cursor: "grabbing" }}
-                className="absolute top-[12px] md:top-[20%] lg:top-20 xl:top-32 left-12 bg-white p-5 rounded-md shadow-2xl "
+                className="absolute top-[12px] md:top-[20%] lg:top-20 xl:top-32 left-12 bg-white p-5 rounded-md shadow-2xl z-40 "
               >
-                <h3 className="text-4xl mb-3 w-64 ">
+                <h3 className="text-4xl font-semibold mb-3 w-64 ">
                   Want to go on an adventure?
                 </h3>
-                <p>Grab or scroll to fix bug 👉🏻</p>
-                <button className="text-sm text-white hover:bg-red-400 transform transition-all duration-300 shadow-xl -ml-5 bg-gray-900 px-4 py-2 rounded-lg mt-5">
+                <p className="-ml-5 ">Go on now. be spontaneous!</p>
+                <button className="text-sm text-white hover:bg-red-400 shadow-sm hover:shadow-md transform transition-all duration-300 shadow-xl -ml-8 bg-gray-900 px-4 py-2 rounded-lg mt-5">
                   Take me to nirvana baby!
                 </button>
               </motion.div>

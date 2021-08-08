@@ -150,26 +150,24 @@ function Header({ placeholder }) {
         {searchInput && (
           <div
             id="#datePicker"
-            className="datePicker flex flex-col justify-center bg-white p-2 mt-2 rounded-b-lg rounded-t-sm shadow-sm col-span-3 w-full lg:w-auto mx-auto"
+            className="datePicker flex flex-col justify-center bg-white p-2 mt-2 rounded-b-lg rounded-t-sm shadow-sm col-span-3 lg:w-auto mx-auto"
           >
-            {window.innerWidth > 1250 ? (
-              <DateRangePicker
-                ranges={[selectionRange]}
-                minDate={new Date()}
-                rangeColors={["#FD5B61"]}
-                onChange={handleSelect}
-                className="shadow-md"
-                color={"#3d91ff"}
-              />
-            ) : (
-              <DateRange
-                ranges={[selectionRange]}
-                minDate={new Date()}
-                rangeColors={["#FD5B61"]}
-                onChange={handleSelect}
-                className="shadow-md "
-              />
-            )}
+            <DateRangePicker
+              ranges={[selectionRange]}
+              minDate={new Date()}
+              rangeColors={["#FD5B61"]}
+              onChange={handleSelect}
+              className="shadow-md dateRangePicker "
+              color={"#3d91ff"}
+            />
+
+            <DateRange
+              ranges={[selectionRange]}
+              minDate={new Date()}
+              rangeColors={["#FD5B61"]}
+              onChange={handleSelect}
+              className="shadow-md dateRange "
+            />
 
             <div className="flex items-center   bg-white border-b shadow-sm">
               <h2 className="text-2xl ml-2 flex-grow font-semibold">
