@@ -23,7 +23,7 @@ export default function Home({ exploreData, cardsData }) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    },0);
+    },3400);
     // 3400
   }, []);
   return (
