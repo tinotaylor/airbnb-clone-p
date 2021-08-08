@@ -8,6 +8,7 @@ import { motion, useTransform, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import { SearchIcon } from "@heroicons/react/solid";
 import Map from "../components/Map";
+import wait from "waait";
 
 function Search({ searchResults }) {
   const [offsetY, setOffsetY] = useState(0);
@@ -68,8 +69,6 @@ function Search({ searchResults }) {
     }
   }, []);
 
-
-
   return (
     <div id="searchPage" className="h-screen">
       <Header placeholder={`${location} | ${range} | ${noOfGuests}`} />
@@ -126,30 +125,36 @@ function Search({ searchResults }) {
             </div>
           </div>
           <div className="flex flex-col">
-            {searchResults
-              .filter((item) => {
-                if (filterResults === "") {
+            {
+              searchResults
+              .filter( (item) => {
+             if (filterResults === "") {
                   return item;
                 } else if (
-                  item.price.toLowerCase().includes(filterResults.toLowerCase())
+                 item.price.toLowerCase().includes(filterResults.toLowerCase())
                 ) {
                   return item;
-                }
-              })
-              .filter((item) => {
-                if (location == "") {
-                  return item;
-                } else if (
-                  item.location.toLowerCase().includes(location.toLowerCase())
-                ) {
-                  return item;
+                } else if (!item.price.toLowerCase().includes(filterResults.toLowerCase()) ) {
+                  return console.log("no results found")
                 }
               })
               .map(
-                ({ img, location, title, description, star, price, total }) => (
+                ({
+                  img,
+                  img2,
+                  img3,
+                  location,
+                  title,
+                  description,
+                  star,
+                  price,
+                  total,
+                }) => (
                   <InfoCard
-                    key={location}
+                    key={img}
                     img={img}
+                    img2={img2}
+                    img3={img3}
                     location={location}
                     title={title}
                     description={description}
@@ -177,7 +182,7 @@ function Search({ searchResults }) {
 export default Search;
 
 export async function getServerSideProps() {
-  const searchResults = await fetch("https://jsonkeeper.com/b/MOTC").then(
+  const searchResults = await fetch("https://links.papareact.com/isz").then(
     (res) => res.json()
   );
 
@@ -188,7 +193,9 @@ export async function getServerSideProps() {
   };
 }
 
-// https://jsonkeeper.com/b/MOTC
+// https://api.npoint.io/30ef5bc0dbe6dd7018a4
 
+
+// https://jsonkeeper.com/b/YBOA
 
 // https://links.papareact.com/isz

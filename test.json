@@ -22,17 +22,6 @@
     "lat": 51.48695
   },
   {
-    "img": "https://links.papareact.com/uz7",
-    "location": "Private room in center of London",
-    "title": "London Studio Apartments",
-    "description": "4 guest · 4 bedroom · 4 bed · 2 bathrooms · Free parking · Washing Machine",
-    "star": 3.8,
-    "price": "£35 / night",
-    "total": "£207 total",
-    "long": -0.135638,
-    "lat": 51.521916
-  },
-  {
     "img": "https://links.papareact.com/6as",
     "location": "Private room in center of London",
     "title": "30 mins to Oxford Street, Excel London",
@@ -42,17 +31,6 @@
     "total": "£320 total",
     "long": -0.069961,
     "lat": 51.472618
-  },
-  {
-    "img": "https://links.papareact.com/xhc",
-    "location": "Private room in center of London",
-    "title": "Spacious Peaceful Modern Bedroom",
-    "description": "3 guest · 1 bedroom · 1 bed · 1.5 shared bthrooms · Wifi · Free parking · Dry Cleaning",
-    "star": 5.0,
-    "price": "£60 / night",
-    "total": "£450 total",
-    "long": -0.08472,
-    "lat": 51.510794
   },
   {
     "img": "https://links.papareact.com/pro",
@@ -116,7 +94,7 @@
     "title": "Independent easter egg for sonny's studio apartment",
     "description": "2 guest · 3 bedroom · 1 bed · 1.5 shared bathrooms · Wifi · Kitchen",
     "star": 4.3,
-    "price": "£98 / night",
+    "price": "£80 / night",
     "total": "£600 total",
     "long": -0.15136771123058537,
     "lat": 51.519338078448286
