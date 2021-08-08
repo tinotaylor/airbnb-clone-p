@@ -13,11 +13,14 @@ import wait from "waait";
 function Search({ searchResults }) {
   const [offsetY, setOffsetY] = useState(0);
   const [filterResults, setFilterResults] = useState("");
+  const [buttonToggle, setButtonToggle] = useState(false);
   const router = useRouter();
   const { location, startDate, endDate, noOfGuests } = router.query;
   const formattedStartDate = format(new Date(startDate), "dd MMMM yy");
   const formattedEndDate = format(new Date(endDate), "dd MMMM yy");
   const range = `${formattedStartDate} - ${formattedEndDate}`;
+
+  console.log(buttonToggle);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -86,7 +89,7 @@ function Search({ searchResults }) {
       </div>
       <main className=" py-14 flex bg-gray-50 relative">
         <section className="flex-grow  px-6 md:px-16">
-          <div className="w-full flex place-items-center justify-between">
+          <div className="w-full flex items-center justify-between">
             <p className="text-xs mb-7">
               <span className="bg-white shadow-sm p-3 rounded-md ">
                 300+ stays -
@@ -100,6 +103,26 @@ function Search({ searchResults }) {
                 for {noOfGuests} guests
               </span>
             </p>
+            {/* <div
+              id="button"
+              onClick={() =>
+                buttonToggle === false
+                  ? setButtonToggle(true)
+                  : setButtonToggle(false)
+              }
+              class={`relative  w-10 mr-2 align-middle   select-none transition duration-200 ease-in`}
+            >
+              <input
+                type="checkbox"
+                name="toggle"
+                id="toggle"
+                class={`toggle-checkbox absolute  transition-all duration-300 block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer`}
+              />
+              <label
+                for="toggle"
+                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
+              ></label>
+            </div> */}
           </div>
           <h1 className="text-3xl font-semibold mt-2 mb-6">
             Stays in {location}
@@ -114,28 +137,25 @@ function Search({ searchResults }) {
           </div>
           <div className=" flex w-auto bg-white p-5 rounded-md shadow-sm">
             <div className="flex items-center h-20 w-full px-2 rounded-md py-2 shadow-md ">
-              Filter By Price:
               <input
-                className=" flex-grow outline-none ml-2"
+                className=" flex-grow outline-none ml-2 text-gray-500"
                 type="text"
                 value={filterResults}
+                placeholder="Filter By Price"
                 onChange={(e) => setFilterResults(e.target.value)}
               />
-              <SearchIcon className="h-10 mr-5 cursor-pointer" />
+              <SearchIcon className="h-8 mr-5 cursor-pointer" />
             </div>
           </div>
           <div className="flex flex-col">
-            {
-              searchResults
-              .filter( (item) => {
-             if (filterResults === "") {
+            {searchResults
+              .filter((item) => {
+                if (filterResults === "") {
                   return item;
                 } else if (
-                 item.price.toLowerCase().includes(filterResults.toLowerCase())
+                  item.price.toLowerCase().includes(filterResults.toLowerCase())
                 ) {
                   return item;
-                } else if (!item.price.toLowerCase().includes(filterResults.toLowerCase()) ) {
-                  return console.log("no results found")
                 }
               })
               .map(
@@ -167,7 +187,10 @@ function Search({ searchResults }) {
           </div>
         </section>
 
-        <section className="relative hidden xl:inline-flex xl:min-w-[600px] rounded-2xl">
+        <section
+          id="map"
+          className={`relative hidden xl:inline-flex  xl:min-w-[600px]  rounded-2xl`}
+        >
           <Map searchResults={searchResults} filterResults={filterResults} />
           <div className=" h-full absolute left-0 transform pointer-events-none rotate-180 p-16 bg-gradient-to-l from-gray-50 "></div>
           <div className=" w-full absolute top-0 transform pointer-events-none  p-16 bg-gradient-to-b from-gray-50 "></div>
@@ -194,7 +217,6 @@ export async function getServerSideProps() {
 }
 
 // https://api.npoint.io/30ef5bc0dbe6dd7018a4
-
 
 // https://jsonkeeper.com/b/YBOA
 

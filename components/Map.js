@@ -1,7 +1,7 @@
 import ReactMapGl, { Marker, Popup } from "react-map-gl";
 import { useState } from "react";
 import getCenter from "geolib/es/getCenter";
-
+import { StarIcon } from "@heroicons/react/solid";
 
 function Map({ searchResults, filterResults }) {
   const [selectedLocation, setSelectedLocation] = useState({});
@@ -22,7 +22,6 @@ function Map({ searchResults, filterResults }) {
     bearing: -50, // bearing in degrees
     zoom: 13,
   });
-
 
   return (
     <ReactMapGl
@@ -70,8 +69,15 @@ function Map({ searchResults, filterResults }) {
                   alt=""
                 />
                 <div className="absolute font-semibold max-w-[200px] text-white z-20 bottom-5 left-4">
-                  <h3 className="">{result.title}</h3>
-                  <h4 className="text-xl">{result.price}</h4>
+                  <div>
+                    <h3 className="">{result.title}</h3>
+                    <h4 className="text-xl">{result.price}</h4>
+                  </div>
+                  <p className="flex items-center">
+                    <StarIcon className="h-6 text-red-400" />
+                    {result.star}
+                  </p>
+                  <div></div>
                 </div>
                 <span className=" w-full absolute  bottom-0 z-10 pointer-events-none transform   p-24 bg-gradient-to-t from-gray-800 "></span>
               </Popup>
